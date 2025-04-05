@@ -150,6 +150,7 @@ def api_decrypt(pssh:str = None, license_url: str = None, headers: str = None, c
                     'status': 'error',
                     'message': f'An error occurred getting json_data\n\n{error}'
                 }
+            licence = None
             try:
                 licence = requests.post(
                     url=license_url,
@@ -161,14 +162,14 @@ def api_decrypt(pssh:str = None, license_url: str = None, headers: str = None, c
             except Exception as error:
                 return {
                     'status': 'error',
-                    'message': f'An error occurred sending license reqeust\n\n{error}'
+                    'message': f'An error occurred sending license reqeust\n\n{error}\n\n{licence.content}'
                 }
             try:
                 pr_cdm.parse_license(pr_session_id, licence.content)
             except Exception as error:
                 return {
                     'status': 'error',
-                    'message': f'An error occurred parsing license content\n\n{error}'
+                    'message': f'An error occurred parsing license content\n\n{error}\n\n{licence.content}'
                 }
             returned_keys = ""
             try:
@@ -289,6 +290,7 @@ def api_decrypt(pssh:str = None, license_url: str = None, headers: str = None, c
                 'status': 'error',
                 'message': f'An error occurred getting json_data\n\n{error}'
             }
+        licence = None
         try:
             licence = requests.post(
                 url=license_url,
@@ -300,7 +302,7 @@ def api_decrypt(pssh:str = None, license_url: str = None, headers: str = None, c
         except Exception as error:
             return {
                 'status': 'error',
-                'message': f'An error occurred sending license reqeust\n\n{error}'
+                'message': f'An error occurred sending license reqeust\n\n{error}\n\n{licence.content}'
             }
         try:
             wv_cdm.parse_license(wv_session_id, licence.content)
@@ -312,7 +314,7 @@ def api_decrypt(pssh:str = None, license_url: str = None, headers: str = None, c
             except Exception as error:
                 return {
                     'status': 'error',
-                    'message': f'An error occurred parsing license content\n\n{error}'
+                    'message': f'An error occurred parsing license content\n\n{error}\n\n{licence.content}'
                 }
         returned_keys = ""
         try:
